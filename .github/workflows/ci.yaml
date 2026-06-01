@@ -1,27 +1,29 @@
-name:Continous Integration
+name: CI Workflow
+
 on:
- push:
-  branches:
-   -main
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
- test:
+  validate:
+    runs-on: ubuntu-latest
 
-  runs-on:ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-  steps:
+      - name: Verify HTML File Exists
+        run: test -f index.html
 
-   -name: Checkout Repository
-    uses: actions/checkout@v4
+      - name: Verify CSS File Exists
+        run: test -f style.css
 
-   -name: Verify HTML Files Exists
-    run: test -f index.html
+      - name: Verify JavaScript File Exists
+        run: test -f script.js
 
-   -name: Verify CSS File Exists
-    run: test -f style.css
-
-   -name: Verify JavaScript File Exists
-    run: test -f script.JavaScript
-
-   -name: CI Successful
-    run: echo "Website Passed Validation"  
+      - name: CI Successful
+        run: echo "Website Passed Validation"
